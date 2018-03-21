@@ -25,7 +25,7 @@ public class LeInformacoes {
         return separadorValor;
     }
 
-    private LeInformacoes(String nomeArquivo, String formato) {
+    public  LeInformacoes(String nomeArquivo, String formato) {
         this.nomeArquivo = nomeArquivo;
         this.formato = formato;
         switch (formato) {
@@ -43,17 +43,9 @@ public class LeInformacoes {
         }
     }
 
-    public static void imprimirMatriz(double[][] matrizCoeficientes, int totalLinhas,
-                                      int totalColunas) {
-        for (int i = 0; i < totalLinhas; i++) {
-            for (int j = 0; j < totalColunas; j++) {
-                System.out.print(matrizCoeficientes[i][j] + " ");
-            }
-            System.out.println();
-        }
-    }
 
-    private double[][] extrairCoeficientes() {
+
+    public double[][] extrairPontos() {
         int totalRows = 4, totalColumns = 4;
         double[][] matrizCoeficientes = new double[totalRows][totalColumns];
         BufferedReader stream = null;
@@ -84,14 +76,14 @@ public class LeInformacoes {
     }
 
     //main p/ teste
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         //inicializa a classe
         LeInformacoes teste = new LeInformacoes("/home/lgcaobianco/repositorios/epc/epc1/teste/arquivoTeste", ".txt");
 
-        double[][] matrizCoeficientes = teste.extrairCoeficientes();
+        double[][] matrizCoeficientes = teste.extrairPontos();
 
         teste.imprimirMatriz(matrizCoeficientes, 4, 4);
 
     }
-
+    */
 }
