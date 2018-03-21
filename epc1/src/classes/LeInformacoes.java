@@ -1,3 +1,4 @@
+package classes;
 /**
  * * created by lgcaobianco on 21/03/18 **
  */
@@ -11,7 +12,7 @@ public class LeInformacoes {
     private String nomeArquivo;
     private String formato;
     private String separadorValor;
-    
+
     private String getNomeArquivo() {
         return nomeArquivo;
     }
@@ -85,7 +86,7 @@ public class LeInformacoes {
     //main p/ teste
     public static void main(String[] args) {
         //inicializa a classe
-        LeInformacoes teste = new LeInformacoes("/home/lgcaobianco/repositorios/epc/epc1/src/arquivoTeste", ".txt");
+        LeInformacoes teste = new LeInformacoes("/home/lgcaobianco/repositorios/epc/epc1/teste/arquivoTeste", ".txt");
 
         double[][] matrizCoeficientes = teste.extrairCoeficientes();
 
