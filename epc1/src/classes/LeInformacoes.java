@@ -6,6 +6,8 @@ package classes;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LeInformacoes {
 
@@ -45,20 +47,22 @@ public class LeInformacoes {
 
 
 
-    public double[][] extrairPontos() {
-        int totalRows = 4, totalColumns = 4;
-        double[][] matrizCoeficientes = new double[totalRows][totalColumns];
+    public List<double[]> extrairPontos() {
+        List<double[]> matrizPontos = new ArrayList<double[]>();
+        String linhaLida = "";
         BufferedReader stream = null;
         try {
             stream = new BufferedReader(new FileReader(getNomeArquivo() + getFormato()));
-            for (int currentRow = 0; currentRow < totalRows; currentRow++) {
-                String line = stream.readLine();
-
-                String[] splitted = line.split(getSeparadorValor());
-                for (int currentColumn = 0; currentColumn < totalColumns; currentColumn++) {
-                    matrizCoeficientes[currentRow][currentColumn] = Double.parseDouble(splitted[currentColumn]);
+            while( ( linhaLida = stream.readLine()) != null ){
+                String[] temporario = linhaLida.split(getSeparadorValor());
+                double[] numerosSeparados = new double[temporario.length];
+                for(int i =0; i<temporario.length; i++){
+                    numerosSeparados[i] = Double.parseDouble(temporario[i]);
                 }
+                matrizPontos.add(numerosSeparados);
+
             }
+
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(1);
@@ -72,18 +76,7 @@ public class LeInformacoes {
                 }
             }
         }
-        return matrizCoeficientes;
+        return matrizPontos;
     }
 
-    //main p/ teste
-    /*public static void main(String[] args) {
-        //inicializa a classe
-        LeInformacoes teste = new LeInformacoes("/home/lgcaobianco/repositorios/epc/epc1/teste/arquivoTeste", ".txt");
-
-        double[][] matrizCoeficientes = teste.extrairPontos();
-
-        teste.imprimirMatriz(matrizCoeficientes, 4, 4);
-
-    }
-    */
 }

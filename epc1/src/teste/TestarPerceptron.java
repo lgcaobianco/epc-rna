@@ -8,10 +8,13 @@ import classes.Perceptron;
 public class TestarPerceptron {
     public static void main(String[] args){
         Perceptron perceptron = new Perceptron();
-        perceptron.construirMatrizPontos();
+        //Necessário colocar o nome do arquivo que contém as informacoes, bem como o formato
+        perceptron.construirMatrizPontos("/home/lgcaobianco/repositorios/epc/epc1/base/valores",
+                ".csv");
         perceptron.construirMatrizCoeficientes();
 
-        perceptron.imprimirMatrizCoeficientes(4,4);
-        perceptron.imprimirMatrizPontos(4,4);
+        perceptron.imprimirMatrizCoeficientes();
+        perceptron.imprimirMatrizPontos();
+        perceptron.treinarPerceptron();
     }
 }
