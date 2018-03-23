@@ -1,5 +1,7 @@
 package classes;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -36,7 +38,7 @@ public class Perceptron {
     }
 
     public void construirMatrizCoeficientes() {
-        matrizCoeficientes[0][0]=-1;
+        matrizCoeficientes[0][0] = -1;
         for (int i = 1; i < matrizCoeficientes.length; i++) {
             for (int j = 0; j < matrizCoeficientes[i].length; j++) {
                 Random r = new Random();
@@ -46,46 +48,48 @@ public class Perceptron {
 
     }
 
+    public int ativacao(double somatorio) {
+        int classificacao;//passar o somatório pelo g(u)
+        if (somatorio >= 0) {
+            classificacao = 1;
+        } else {
+            classificacao = -1;
+        }
+        return classificacao;
+    }
+
 
     public void treinarPerceptron() {
-        double somatorio = 0, taxaAprendizagem = 0.01, classificacao, contadorEpocas = 0;
-        double theta = matrizCoeficientes[0][0];
+        double somatorio, taxaAprendizagem = 0.01, classificacao, contadorEpocas = 0;
+        int erro, iMaximo=0;
 
         percorreLinhasConjuntoTreinamento:
         for (int i = 0; i < matrizPontos.size(); ) {
             somatorio = 0;
             for (int j = 0; j < matrizPontos.get(i).length - 1; j++) {
-                somatorio += (matrizPontos.get(i)[j] * matrizCoeficientes[j+1][0]);
+                somatorio += (matrizPontos.get(i)[j] * matrizCoeficientes[j][0]);
             }
-            somatorio += theta;
 
-            //passar o somatório pelo g(u)
-            if (somatorio >= 0) {
-                classificacao = 1;
-
-            } else {
-                classificacao = -1;
-
-            }
+            classificacao = ativacao(somatorio);
 
             if (classificacao == matrizPontos.get(i)[3]) {
-                System.out.println("Os valores concidiram, avancar pra prox linha");
                 i++;
-                continue percorreLinhasConjuntoTreinamento;
 
             } else { //se classificacao nao coincide com d_i, ajustar coeficientes
-                for (int k = 0; k < 4; k++) {
-                    double somaMultiplicacaoVetorX=0;
-                    for(int l=0; l< matrizPontos.get(i).length - 1; l++) {
-                        somaMultiplicacaoVetorX = taxaAprendizagem * (matrizPontos.get(i)[3] - classificacao) *  matrizPontos.get(i)[l];
-                    }
-                    matrizCoeficientes[k][0] = matrizCoeficientes[k][0] + somaMultiplicacaoVetorX;
+                erro = (int) (matrizPontos.get(i)[3] - classificacao);
+                for (int j = 0; j < matrizCoeficientes.length; j++) {
+                    matrizCoeficientes[j][0] += (taxaAprendizagem * erro * matrizPontos.get(i)[j]);
                 }
-                //ajustar o theta
-
                 contadorEpocas++;
-                System.out.println("theta: " + theta + ", i: " + i + ", ");
-                i = 0;
+                if(contadorEpocas%100000000 == 0){
+                    System.out.println("Vetor de pesos: " + matrizCoeficientes[0][0] + matrizCoeficientes[1][0] + matrizCoeficientes[2][0] + matrizCoeficientes[3][0]+", epoca: " + contadorEpocas + ", I maximo: "+ iMaximo);
+
+                }
+                if(iMaximo<i){
+                    iMaximo = i;
+                }
+
+                i=0;
             }
 
 
