@@ -59,7 +59,7 @@ public class Perceptron {
     }
 
 
-    public void treinarPerceptron() {
+    public int treinarPerceptron() {
         double somatorio, taxaAprendizagem = 0.01, classificacao, contadorEpocas = 0;
         int erro, iMaximo=0;
 
@@ -95,8 +95,8 @@ public class Perceptron {
 
         }
 
-        imprimirMatrizCoeficientes();
 
+        return (int) contadorEpocas;
     }
 }
 

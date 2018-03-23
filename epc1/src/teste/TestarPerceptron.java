@@ -15,6 +15,9 @@ public class TestarPerceptron {
 
         perceptron.imprimirMatrizCoeficientes();
         perceptron.imprimirMatrizPontos();
-        perceptron.treinarPerceptron();
+        int epocas = perceptron.treinarPerceptron();
+        System.out.println("A quantidade de epocas foi: "+ epocas);
+        perceptron.imprimirMatrizCoeficientes();
+
     }
 }
