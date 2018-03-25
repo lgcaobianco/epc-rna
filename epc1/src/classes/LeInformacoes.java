@@ -53,10 +53,10 @@ public class LeInformacoes {
         BufferedReader stream = null;
         try {
             stream = new BufferedReader(new FileReader(getNomeArquivo() + getFormato()));
-            while( ( linhaLida = stream.readLine()) != null ){
+            while ((linhaLida = stream.readLine()) != null) {
                 String[] temporario = linhaLida.split(getSeparadorValor());
                 double[] numerosSeparados = new double[temporario.length];
-                for(int i =0; i<temporario.length; i++){
+                for (int i = 0; i < temporario.length; i++) {
                     numerosSeparados[i] = Double.parseDouble(temporario[i]);
                 }
                 matrizPontos.add(numerosSeparados);
