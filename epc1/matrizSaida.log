@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=latex 2018.3.16)  25 MAR 2018 16:37
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=latex 2018.3.16)  25 MAR 2018 16:41
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -715,21 +715,14 @@ With luck, this will get me unwedged. But if you
 really didn't forget anything, try typing `2' now; then
 my insertion and my current dilemma will both disappear.
 
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 39.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 39.
-
-LaTeX Warning: Float too large for page by 21.89705pt on input line 42.
-
 [1] (./matrizSaida.aux) ) 
 Here is how much of TeX's memory you used:
- 878 strings out of 493030
- 9783 string characters out of 6136260
- 90679 words of memory out of 5000000
- 4456 multiletter control sequences out of 15000+600000
- 5463 words of font info for 20 fonts, out of 8000000 for 9000
+ 864 strings out of 493030
+ 9645 string characters out of 6136260
+ 69679 words of memory out of 5000000
+ 4448 multiletter control sequences out of 15000+600000
+ 3640 words of font info for 14 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 25i,15n,19p,593b,353s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 25i,10n,19p,594b,267s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on matrizSaida.dvi (1 page, 12728 bytes).
+Output written on matrizSaida.dvi (1 page, 3492 bytes).

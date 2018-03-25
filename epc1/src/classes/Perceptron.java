@@ -162,7 +162,6 @@ public class Perceptron {
 
     public static void finalizarTabelaLatex() {
         try (Writer writer = new FileWriter("matrizSaida.tex", true)) {
-            writer.append("\\let\\thefootnote\\relax\\footnote{Tabela em \\LaTeX gerada automaticamente pelo software em Java}" + System.getProperty("line.separator"));
             writer.append("\\end{tabular}" + System.getProperty("line.separator"));
             writer.append("\\caption{Tabela em \\LaTeX{} gerada automaticamente pelo software em Java}" + System.getProperty("line.separator"));
             writer.append("\\end{table}" + System.getProperty("line.separator"));
