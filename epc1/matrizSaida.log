@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=latex 2018.3.16)  25 MAR 2018 00:36
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=latex 2018.3.16)  25 MAR 2018 16:37
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -22,6 +22,9 @@ File: size10.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
 \abovecaptionskip=\skip41
 \belowcaptionskip=\skip42
 \bibindent=\dimen102
+)
+(/usr/share/texlive/texmf-dist/tex/latex/multirow/multirow.sty
+\bigstrutjot=\dimen103
 )
 (/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty
 Package: inputenc 2015/03/17 v1.2c Input encoding file
@@ -333,9 +336,37 @@ Now handling font encoding U ...
    defining Unicode char U+2122 (decimal 8482)
    defining Unicode char U+2423 (decimal 9251)
 ))
-(/usr/share/texlive/texmf-dist/tex/latex/multirow/multirow.sty
-\bigstrutjot=\dimen103
+(/usr/share/texlive/texmf-dist/tex/latex/footmisc/footmisc.sty
+Package: footmisc 2011/06/06 v5.5b a miscellany of footnote facilities
+\FN@temptoken=\toks16
+\footnotemargin=\dimen104
+\c@pp@next@reset=\count87
+Package footmisc Info: Declaring symbol style bringhurst on input line 855.
+Package footmisc Info: Declaring symbol style chicago on input line 863.
+Package footmisc Info: Declaring symbol style wiley on input line 872.
+Package footmisc Info: Declaring symbol style lamport-robust on input line 883.
+
+Package footmisc Info: Declaring symbol style lamport* on input line 903.
+Package footmisc Info: Declaring symbol style lamport*-robust on input line 924
+.
 )
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/lscape.sty
+Package: lscape 2000/10/22 v3.01 Landscape Pages (DPC)
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2016/01/03 v1.0q Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/graphics.cfg
+File: graphics.cfg 2010/04/23 v1.9 graphics configuration of TeX Live
+)
+Package graphics Info: Driver file: dvips.def on input line 95.
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/dvips.def
+File: dvips.def 2015/12/30 v3.0k Driver-dependent file (DPC,SPQR)
+)))
 (./matrizSaida.aux)
 \openout1 = `matrizSaida.aux'.
 
@@ -352,14 +383,14 @@ LaTeX Font Info:    ... okay on input line 7.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 7.
 LaTeX Font Info:    ... okay on input line 7.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 12.
+(Font)              <7> on input line 11.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 12.
+(Font)              <5> on input line 11.
 
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.15 ...olumn{1}{|c|}{} & \multicolumn{1}{l|}{w_0}
+l.14 ...olumn{1}{|c|}{} & \multicolumn{1}{l|}{w_0}
                                                    & \multicolumn{1}{l|}{w_1...
 
 ? r
@@ -367,7 +398,7 @@ OK, entering \nonstopmode...
 ! Extra }, or forgotten $.
 \@preamble ...ignorespaces \@sharp \unskip \hfil }
                                                   \hskip \tabcolsep \hskip -...
-l.15 ...olumn{1}{|c|}{} & \multicolumn{1}{l|}{w_0}
+l.14 ...olumn{1}{|c|}{} & \multicolumn{1}{l|}{w_0}
                                                    & \multicolumn{1}{l|}{w_1...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -378,7 +409,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.15 ...olumn{1}{|c|}{} & \multicolumn{1}{l|}{w_0}
+l.14 ...olumn{1}{|c|}{} & \multicolumn{1}{l|}{w_0}
                                                    & \multicolumn{1}{l|}{w_1...
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -389,7 +420,7 @@ my insertion and my current dilemma will both disappear.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.15 ...olumn{1}{|c|}{} & \multicolumn{1}{l|}{w_0}
+l.14 ...olumn{1}{|c|}{} & \multicolumn{1}{l|}{w_0}
                                                    & \multicolumn{1}{l|}{w_1...
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -400,7 +431,7 @@ my insertion and my current dilemma will both disappear.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.15 ...umn{1}{l|}{w_0} & \multicolumn{1}{l|}{w_1}
+l.14 ...umn{1}{l|}{w_0} & \multicolumn{1}{l|}{w_1}
                                                    & \multicolumn{1}{l|}{w_2...
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
@@ -408,7 +439,7 @@ you left one out. Proceed, with fingers crossed.
 ! Extra }, or forgotten $.
 \@preamble ...ignorespaces \@sharp \unskip \hfil }
                                                   \hskip \tabcolsep \hskip -...
-l.15 ...umn{1}{l|}{w_0} & \multicolumn{1}{l|}{w_1}
+l.14 ...umn{1}{l|}{w_0} & \multicolumn{1}{l|}{w_1}
                                                    & \multicolumn{1}{l|}{w_2...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -419,7 +450,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.15 ...umn{1}{l|}{w_0} & \multicolumn{1}{l|}{w_1}
+l.14 ...umn{1}{l|}{w_0} & \multicolumn{1}{l|}{w_1}
                                                    & \multicolumn{1}{l|}{w_2...
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -430,7 +461,7 @@ my insertion and my current dilemma will both disappear.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.15 ...umn{1}{l|}{w_0} & \multicolumn{1}{l|}{w_1}
+l.14 ...umn{1}{l|}{w_0} & \multicolumn{1}{l|}{w_1}
                                                    & \multicolumn{1}{l|}{w_2...
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -441,7 +472,7 @@ my insertion and my current dilemma will both disappear.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.15 ...umn{1}{l|}{w_1} & \multicolumn{1}{l|}{w_2}
+l.14 ...umn{1}{l|}{w_1} & \multicolumn{1}{l|}{w_2}
                                                    & \multicolumn{1}{l|}{w_3...
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
@@ -449,7 +480,7 @@ you left one out. Proceed, with fingers crossed.
 ! Extra }, or forgotten $.
 \@preamble ...ignorespaces \@sharp \unskip \hfil }
                                                   \hskip \tabcolsep \hskip -...
-l.15 ...umn{1}{l|}{w_1} & \multicolumn{1}{l|}{w_2}
+l.14 ...umn{1}{l|}{w_1} & \multicolumn{1}{l|}{w_2}
                                                    & \multicolumn{1}{l|}{w_3...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -460,7 +491,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.15 ...umn{1}{l|}{w_1} & \multicolumn{1}{l|}{w_2}
+l.14 ...umn{1}{l|}{w_1} & \multicolumn{1}{l|}{w_2}
                                                    & \multicolumn{1}{l|}{w_3...
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -471,7 +502,7 @@ my insertion and my current dilemma will both disappear.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.15 ...umn{1}{l|}{w_1} & \multicolumn{1}{l|}{w_2}
+l.14 ...umn{1}{l|}{w_1} & \multicolumn{1}{l|}{w_2}
                                                    & \multicolumn{1}{l|}{w_3...
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -482,7 +513,7 @@ my insertion and my current dilemma will both disappear.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.15 ...umn{1}{l|}{w_2} & \multicolumn{1}{l|}{w_3}
+l.14 ...umn{1}{l|}{w_2} & \multicolumn{1}{l|}{w_3}
                                                    & \multicolumn{1}{l|}{w_0...
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
@@ -490,7 +521,7 @@ you left one out. Proceed, with fingers crossed.
 ! Extra }, or forgotten $.
 \@preamble ...ignorespaces \@sharp \unskip \hfil }
                                                   \hskip \tabcolsep \hskip -...
-l.15 ...umn{1}{l|}{w_2} & \multicolumn{1}{l|}{w_3}
+l.14 ...umn{1}{l|}{w_2} & \multicolumn{1}{l|}{w_3}
                                                    & \multicolumn{1}{l|}{w_0...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -501,7 +532,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.15 ...umn{1}{l|}{w_2} & \multicolumn{1}{l|}{w_3}
+l.14 ...umn{1}{l|}{w_2} & \multicolumn{1}{l|}{w_3}
                                                    & \multicolumn{1}{l|}{w_0...
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -512,7 +543,7 @@ my insertion and my current dilemma will both disappear.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.15 ...umn{1}{l|}{w_2} & \multicolumn{1}{l|}{w_3}
+l.14 ...umn{1}{l|}{w_2} & \multicolumn{1}{l|}{w_3}
                                                    & \multicolumn{1}{l|}{w_0...
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -523,7 +554,7 @@ my insertion and my current dilemma will both disappear.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.15 ...umn{1}{l|}{w_3} & \multicolumn{1}{l|}{w_0}
+l.14 ...umn{1}{l|}{w_3} & \multicolumn{1}{l|}{w_0}
                                                    & \multicolumn{1}{l|}{w_1...
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
@@ -531,7 +562,7 @@ you left one out. Proceed, with fingers crossed.
 ! Extra }, or forgotten $.
 \@preamble ...ignorespaces \@sharp \unskip \hfil }
                                                   \hskip \tabcolsep \hskip -...
-l.15 ...umn{1}{l|}{w_3} & \multicolumn{1}{l|}{w_0}
+l.14 ...umn{1}{l|}{w_3} & \multicolumn{1}{l|}{w_0}
                                                    & \multicolumn{1}{l|}{w_1...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -542,7 +573,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.15 ...umn{1}{l|}{w_3} & \multicolumn{1}{l|}{w_0}
+l.14 ...umn{1}{l|}{w_3} & \multicolumn{1}{l|}{w_0}
                                                    & \multicolumn{1}{l|}{w_1...
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -553,7 +584,7 @@ my insertion and my current dilemma will both disappear.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.15 ...umn{1}{l|}{w_3} & \multicolumn{1}{l|}{w_0}
+l.14 ...umn{1}{l|}{w_3} & \multicolumn{1}{l|}{w_0}
                                                    & \multicolumn{1}{l|}{w_1...
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -564,7 +595,7 @@ my insertion and my current dilemma will both disappear.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.15 ...umn{1}{l|}{w_0} & \multicolumn{1}{l|}{w_1}
+l.14 ...umn{1}{l|}{w_0} & \multicolumn{1}{l|}{w_1}
                                                    & \multicolumn{1}{l|}{w_2...
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
@@ -572,7 +603,7 @@ you left one out. Proceed, with fingers crossed.
 ! Extra }, or forgotten $.
 \@preamble ...ignorespaces \@sharp \unskip \hfil }
                                                   \hskip \tabcolsep \hskip -...
-l.15 ...umn{1}{l|}{w_0} & \multicolumn{1}{l|}{w_1}
+l.14 ...umn{1}{l|}{w_0} & \multicolumn{1}{l|}{w_1}
                                                    & \multicolumn{1}{l|}{w_2...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -583,7 +614,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.15 ...umn{1}{l|}{w_0} & \multicolumn{1}{l|}{w_1}
+l.14 ...umn{1}{l|}{w_0} & \multicolumn{1}{l|}{w_1}
                                                    & \multicolumn{1}{l|}{w_2...
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -594,7 +625,7 @@ my insertion and my current dilemma will both disappear.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.15 ...umn{1}{l|}{w_0} & \multicolumn{1}{l|}{w_1}
+l.14 ...umn{1}{l|}{w_0} & \multicolumn{1}{l|}{w_1}
                                                    & \multicolumn{1}{l|}{w_2...
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -605,7 +636,7 @@ my insertion and my current dilemma will both disappear.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.15 ...umn{1}{l|}{w_1} & \multicolumn{1}{l|}{w_2}
+l.14 ...umn{1}{l|}{w_1} & \multicolumn{1}{l|}{w_2}
                                                    & \multicolumn{1}{l|}{w_3...
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
@@ -613,7 +644,7 @@ you left one out. Proceed, with fingers crossed.
 ! Extra }, or forgotten $.
 \@preamble ...ignorespaces \@sharp \unskip \hfil }
                                                   \hskip \tabcolsep \hskip -...
-l.15 ...umn{1}{l|}{w_1} & \multicolumn{1}{l|}{w_2}
+l.14 ...umn{1}{l|}{w_1} & \multicolumn{1}{l|}{w_2}
                                                    & \multicolumn{1}{l|}{w_3...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -624,7 +655,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.15 ...umn{1}{l|}{w_1} & \multicolumn{1}{l|}{w_2}
+l.14 ...umn{1}{l|}{w_1} & \multicolumn{1}{l|}{w_2}
                                                    & \multicolumn{1}{l|}{w_3...
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -635,7 +666,7 @@ my insertion and my current dilemma will both disappear.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.15 ...umn{1}{l|}{w_1} & \multicolumn{1}{l|}{w_2}
+l.14 ...umn{1}{l|}{w_1} & \multicolumn{1}{l|}{w_2}
                                                    & \multicolumn{1}{l|}{w_3...
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -646,7 +677,7 @@ my insertion and my current dilemma will both disappear.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.15 ...umn{1}{l|}{w_2} & \multicolumn{1}{l|}{w_3}
+l.14 ...umn{1}{l|}{w_2} & \multicolumn{1}{l|}{w_3}
                                                    & \multicolumn{1}{l|}{} \...
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
@@ -654,7 +685,7 @@ you left one out. Proceed, with fingers crossed.
 ! Extra }, or forgotten $.
 \@preamble ...ignorespaces \@sharp \unskip \hfil }
                                                   \hskip \tabcolsep \hskip -...
-l.15 ...umn{1}{l|}{w_2} & \multicolumn{1}{l|}{w_3}
+l.14 ...umn{1}{l|}{w_2} & \multicolumn{1}{l|}{w_3}
                                                    & \multicolumn{1}{l|}{} \...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -665,7 +696,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.15 ...umn{1}{l|}{w_2} & \multicolumn{1}{l|}{w_3}
+l.14 ...umn{1}{l|}{w_2} & \multicolumn{1}{l|}{w_3}
                                                    & \multicolumn{1}{l|}{} \...
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -676,7 +707,7 @@ my insertion and my current dilemma will both disappear.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.15 ...umn{1}{l|}{w_2} & \multicolumn{1}{l|}{w_3}
+l.14 ...umn{1}{l|}{w_2} & \multicolumn{1}{l|}{w_3}
                                                    & \multicolumn{1}{l|}{} \...
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -684,19 +715,21 @@ With luck, this will get me unwedged. But if you
 really didn't forget anything, try typing `2' now; then
 my insertion and my current dilemma will both disappear.
 
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 39.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 39.
 
-Overfull \hbox (49.73692pt too wide) in paragraph at lines 12--19
-[][] 
- []
+LaTeX Warning: Float too large for page by 21.89705pt on input line 42.
 
 [1] (./matrizSaida.aux) ) 
 Here is how much of TeX's memory you used:
- 513 strings out of 493030
- 4913 string characters out of 6136260
- 58594 words of memory out of 5000000
- 4116 multiletter control sequences out of 15000+600000
- 3640 words of font info for 14 fonts, out of 8000000 for 9000
+ 878 strings out of 493030
+ 9783 string characters out of 6136260
+ 90679 words of memory out of 5000000
+ 4456 multiletter control sequences out of 15000+600000
+ 5463 words of font info for 20 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 23i,10n,17p,310b,235s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 25i,15n,19p,593b,353s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on matrizSaida.dvi (1 page, 1356 bytes).
+Output written on matrizSaida.dvi (1 page, 12728 bytes).
