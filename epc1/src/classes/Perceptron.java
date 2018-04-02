@@ -109,7 +109,7 @@ public class Perceptron {
                 somatorio += this.conjuntoTeste.get(i)[j] * this.matrizPesosFinal[j][0];
             }
             int classificacao = ativacao(somatorio);
-            System.out.println("A linha: " + (i + 1) + " foi classificada como: " + classificacao);
+            System.out.println((i + 1) + "," + classificacao);
 
         }
     }
@@ -162,7 +162,7 @@ public class Perceptron {
 
     public static void finalizarTabelaLatex() {
         try (Writer writer = new FileWriter("matrizSaida.tex", true)) {
-            writer.append("\\end{tabular}" + System.getProperty("line.separator"));
+                writer.append("\\end{tabular}" + System.getProperty("line.separator"));
             writer.append("\\caption{Tabela em \\LaTeX{} gerada automaticamente pelo software em Java}" + System.getProperty("line.separator"));
             writer.append("\\end{table}" + System.getProperty("line.separator"));
             writer.append("\\end{landscape}" + System.getProperty("line.separator"));
