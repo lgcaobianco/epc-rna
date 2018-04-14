@@ -85,28 +85,27 @@ public class Adaline {
 	}
 
 	public static void main(String[] args) {
-		Adaline adaline = new Adaline("/home/lgcaobianco/repositorios/epc-rna/epc2/src/classes/base/inputs", ".csv");
-		adaline.imprimirMatrizInputs();
-		System.out.println("Matriz de coeficientes inicial: ");
-		adaline.imprimirMatrizCoeficientes("inicial");
-		System.out.println("Matriz de coeficientes final: ");
-		adaline.imprimirMatrizCoeficientes("final");
-
 		double epsilon = Math.pow(10, -6);
-		double erroAnterior = 0;
-
 		List<Adaline> adalines = new ArrayList<Adaline>(5);
-		adaline.erroQuadraticoAtual = adaline.calcularErroQuadratico();
-		while (Math.abs(adaline.erroQuadraticoAtual - adaline.erroQuadraticoAnterior) > epsilon) {
-			adaline.treinarAdaline();
-			adaline.erroQuadraticoAnterior = adaline.erroQuadraticoAtual;
-			adaline.erroQuadraticoAtual = adaline.calcularErroQuadratico();
-			adaline.contadorEpocas++;
+		for (int i = 0; i < 5; i++) {
+			Adaline aux = new Adaline("/home/lgcaobianco/repositorios/epc-rna/epc2/src/classes/base/inputs", ".csv");
+			adalines.add(aux);
 		}
-		System.out.println("Os coeficientes finais são: ");
-		adaline.imprimirMatrizCoeficientes("final");
-		System.out.println("O erro quadratico terminou em: " + adaline.erroQuadraticoAtual + "com: "
-				+ adaline.contadorEpocas + " epocas.");
+
+		for (Adaline adaline : adalines) {
+			adaline.erroQuadraticoAtual = adaline.calcularErroQuadratico();
+			while (Math.abs(adaline.erroQuadraticoAtual - adaline.erroQuadraticoAnterior) > epsilon) {
+				adaline.treinarAdaline();
+				adaline.erroQuadraticoAnterior = adaline.erroQuadraticoAtual;
+				adaline.erroQuadraticoAtual = adaline.calcularErroQuadratico();
+				adaline.contadorEpocas++;
+			}
+			System.out.println("Os coeficientes finais são: ");
+			adaline.imprimirMatrizCoeficientes("final");
+			System.out.println("O erro quadratico terminou em: " + adaline.erroQuadraticoAtual + "com: "
+					+ adaline.contadorEpocas + " epocas.");
+			System.out.println();
+		}
 	}
 
 }
