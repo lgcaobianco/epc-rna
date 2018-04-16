@@ -118,7 +118,7 @@ public class Adaline {
 		PrintWriter writer = new PrintWriter("/home/lgcaobianco/repositorios/epc-rna/epc2/erroqm.csv", "UTF-8");
 		for (int i = 0; i < 5; i++) {
 			Adaline aux = new Adaline("/home/lgcaobianco/repositorios/epc-rna/epc2/src/classes/base/inputs", ".csv");
-			aux.construirConjuntoOperacao("/home/lgcaobianco/repositorios/epc-rna/epc2/src/classes/base/operacao",
+			aux.construirConjuntoOperacao("/home/lgcaobianco/repositorios/epc-rna/epc2/src/classes/base/inputs",
 					".csv");
 			adalines.add(aux);
 			System.out.println("Adaline instanciada.");
