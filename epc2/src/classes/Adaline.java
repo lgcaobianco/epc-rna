@@ -1,5 +1,8 @@
 package classes;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -19,6 +22,7 @@ public class Adaline {
 	double taxaAprendizagem;
 	double erroQuadraticoAtual = 0;
 	double erroQuadraticoAnterior = 0;
+	
 
 	public Adaline(String nomeArquivo, String tipoArquivo) {
 		LeitorPontosEntrada leitor = new LeitorPontosEntrada(nomeArquivo, tipoArquivo);
@@ -107,21 +111,24 @@ public class Adaline {
 		}
 	}
 
-	public static void main(String[] args) throws InterruptedException {
+	public static void main(String[] args)
+			throws InterruptedException, FileNotFoundException, UnsupportedEncodingException {
 		double epsilon = Math.pow(10, -6);
 		List<Adaline> adalines = new ArrayList<Adaline>(5);
+		PrintWriter writer = new PrintWriter("/home/lgcaobianco/repositorios/epc-rna/epc2/erroqm.csv", "UTF-8");
 		for (int i = 0; i < 5; i++) {
 			Adaline aux = new Adaline("/home/lgcaobianco/repositorios/epc-rna/epc2/src/classes/base/inputs", ".csv");
 			aux.construirConjuntoOperacao("/home/lgcaobianco/repositorios/epc-rna/epc2/src/classes/base/operacao",
 					".csv");
 			adalines.add(aux);
 			System.out.println("Adaline instanciada.");
-			TimeUnit.MINUTES.sleep(1);
-			
+			TimeUnit.MINUTES.sleep(1 / 5);
+
 		}
 
 		for (Adaline adaline : adalines) {
 			System.out.println("====================== Adaline ======================");
+			writer.println("====================== Adaline ======================");
 			// fase de treino
 			System.out.println("               Treinamento               ");
 			adaline.erroQuadraticoAtual = adaline.calcularErroQuadratico();
@@ -130,6 +137,7 @@ public class Adaline {
 				adaline.erroQuadraticoAnterior = adaline.erroQuadraticoAtual;
 				adaline.erroQuadraticoAtual = adaline.calcularErroQuadratico();
 				adaline.contadorEpocas++;
+				writer.write(adaline.contadorEpocas + ", " + adaline.erroQuadraticoAtual+"\n");
 			}
 			System.out.print("Os coeficientes inciais são: ");
 			adaline.imprimirMatrizCoeficientes("inicial");
@@ -153,6 +161,8 @@ public class Adaline {
 			System.out.println("=====================================================");
 
 		}
+
+		writer.close();
 	}
 
 }
