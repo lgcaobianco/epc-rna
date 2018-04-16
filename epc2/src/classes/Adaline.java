@@ -3,6 +3,7 @@ package classes;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 /**
  * created by lgcaobianco on 2018-04-14
@@ -106,7 +107,7 @@ public class Adaline {
 		}
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		double epsilon = Math.pow(10, -6);
 		List<Adaline> adalines = new ArrayList<Adaline>(5);
 		for (int i = 0; i < 5; i++) {
@@ -114,6 +115,9 @@ public class Adaline {
 			aux.construirConjuntoOperacao("/home/lgcaobianco/repositorios/epc-rna/epc2/src/classes/base/operacao",
 					".csv");
 			adalines.add(aux);
+			System.out.println("Adaline instanciada.");
+			TimeUnit.MINUTES.sleep(1);
+			
 		}
 
 		for (Adaline adaline : adalines) {
