@@ -1,0 +1,165 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazilian]{babel}
+\usepackage{amsmath}
+
+
+
+\begin{document}
+
+\section{Definições}
+\par Assumindo a seguinte terminologia para o desenvolvimento das equações:
+\begin{itemize}
+  \item W1 corresponde a matriz de coeficientes entre a 1ª e 2ª camada.
+  \item W2 corresponde a matriz de coeficientes entre a 2ª e 3ª camada.
+  \item W3 corresponde a matriz de coeficientes entre a 1ª e 3ª camada.
+  \item $I^{(L)}_{j}$ são os vetores cujos elementos denotam a entrada ponderada em relação ao j-ésimo neurônio da camada L.
+\end{itemize}
+
+
+\par Os vetores $I^{(L)}_{j}$ serão definidos abaixo.
+\begin{equation}
+  I^{(1)}_{1} = \sum_{i=0}^{n} W1_{(1,i)} \cdot x_{i} \Longrightarrow
+  W1_{1,0} \cdot x_{0} + W1_{1,1} \cdot x_{1} + \cdots + W1_{1,n} \cdot x_{n}
+  \label{eq:somatorio_i11}
+\end{equation}
+
+
+\begin{equation}
+  I^{(1)}_{2} = \sum_{i=0}^{n} W1_{(2,i)} \cdot x_{i} \Longrightarrow
+  W1_{2,0} \cdot x_{0} + W1_{2,1} \cdot x_{1} + \cdots + W1_{2,n} \cdot x_{n}
+  \label{eq:somatorio_i12}
+\end{equation}
+
+
+\begin{equation}
+  I^{(1)}_{N1} = \sum_{i=0}^{n} W1_{(N1,i)} \cdot x_{i} \Longrightarrow
+  W1_{N1,0} \cdot x_{0} + W1_{N1,1} \cdot x_{1} + \cdots + W1_{N1,n} \cdot x_{n}
+  \label{eq:somatorio_i1n1}
+\end{equation}
+
+
+\begin{equation}
+  I^{(2)}_{1} = \sum_{i=0}^{n} W2_{(1,i)} \cdot x_{i} \Longrightarrow
+  W2_{1,0} \cdot x_{0} + W2_{1,1} \cdot x_{1} + \cdots + W2_{1,n} \cdot x_{n}
+  \label{eq:somatorio_i21}
+\end{equation}
+
+\begin{equation}
+  I^{(2)}_{2} = \sum_{i=0}^{n} W2_{(2,i)} \cdot x_{i} \Longrightarrow
+  W2_{2,0} \cdot x_{0} + W2_{2,1} \cdot x_{1} + \cdots + W2_{2,n} \cdot x_{n}
+  \label{eq:somatorio_i22}
+\end{equation}
+
+\begin{equation}
+  I^{(2)}_{N1} = \sum_{i=0}^{n} W2_{(N1,i)} \cdot x_{i} \Longrightarrow
+  W2_{N1,0} \cdot x_{0} + W2_{N1,1} \cdot x_{1} + \cdots + W2_{N1,n} \cdot x_{n}
+  \label{eq:somatorio_i2n1}
+\end{equation}
+
+\begin{align*}
+  I^{(3)}_{1} = \sum_{i=0}^{n} W2_{(1,i)} \cdot x_{i} + \sum_{i=0}^{n} W3_{(1,i)} \cdot x_{i}
+  \Longrightarrow \sum_{i=0}^{n} X_{i} \cdot (W3_{(1,i)} + W2_{(1,i)}) \Longrightarrow \\
+  \Longrightarrow  (W3_{1,0} +  W2_{1,0}) \cdot x_{0} + (W3_{1,1} +  W2_{1,1}) \cdot x_{1} + \cdots +
+  (W3_{1,n} +  W2_{1,n})
+   \cdot x_{n}
+  \label{eq:somatorio_i31}
+\end{align*}
+
+\section{Ajuste da camada de saída}
+
+\begin{equation}
+  \bigtriangledown E^{(3)} = \frac{\partial E}{\partial W^{(3)}_{ji}} =
+  \frac{\partial E}{\partial Y^{(3)}_{j}}
+    \cdot
+  \frac{\partial Y^{(3)}_{j}}{\partial I^{(3)}_{j}}
+    \cdot
+  \frac{\partial I^{(3)}_{j}}{\partial W^{(3)}_{ji}}
+  \label{eq:5.9}
+\end{equation}
+
+
+\par  Utilizando-se das definições feitas anteriormente, podemos extrair que:
+\begin{equation}
+  \frac{\partial I^{(3)}_{j}}{\partial W^{(3)}_{ji}} = Y_{j}^{(2)}
+  \label{eq:5.10}
+\end{equation}
+
+
+\begin{equation}
+  \frac{\partial Y^{(3)}_{j}}{\partial I^{(3)}_{j}} = g'(I_{j}^{(3)})
+  \label{eq:5.11}
+\end{equation}
+
+\begin{equation}
+\frac{\partial E}{\partial Y^{(3)}_{j}} = -(d_{j} - Y_{j}^{(3)})
+\label{eq:5.12}
+\end{equation}
+
+\par Substituindo as equações \eqref{eq:5.10}, \eqref{eq:5.11} e \eqref{eq:5.12} em \eqref{eq:5.9}, obtemos:
+\begin{equation}
+  \frac{\partial E}{\partial W_{ji}^{(3)}} = -(d_{j} - Y_{j}^{(3)}) \cdot g'(I_{j}^{(3)}) \cdot Y_{i}^{(2)}
+  \label{eq:5.13}
+\end{equation}
+
+\par Obtém-se:
+\begin{equation}
+  \Delta W_{ji}^{(3)} = -\eta \cdot \frac{\partial E}{\partial W_{ji}^{(3)}} \Longleftrightarrow
+  \Delta W_{ji} = \eta \cdot \delta_{j}^{(3)} \cdot Y_{i}^{(2)}
+  \label{eq:5.14}
+\end{equation}
+
+
+\section{Ajuste da 1ª camada escondida}
+\begin{equation}
+  \bigtriangledown E^{(2)} = \frac{\partial E}{\partial W^{(1)}_{ji}} =
+  \frac{\partial E}{\partial Y^{(1)}_{j}}
+    \cdot
+  \frac{\partial Y^{(1)}_{j}}{\partial I^{(1)}_{j}}
+    \cdot
+  \frac{\partial I^{(1)}_{j}}{\partial W^{(1)}_{ji}}
+  \label{eq:5.29}
+\end{equation}
+
+\par Utilizando os conceitos definidos anteriormente, obtém-se:
+\begin{equation}
+  \frac{\partial I_{j}^{(1)}}{\partial W_{ji}^{(1)}} = x_{i}
+  \label{eq:5.30}
+\end{equation}
+
+\begin{equation}
+\frac{\partial Y_{j}^{(1)}}{\partial I_{j}^{(1)}} = g'(I_{j}^{(1)})
+\label{eq:5.31}
+\end{equation}
+
+\begin{equation}
+\frac{\partial E}{\partial Y_{j}^{(1)}} = \sum_{k=1}^{n_{2}} \frac{\partial E}{\partial I_{k}^{(2)}} \cdot \frac{\partial I_{k}^{(2)}}{\partial Y_{j}^{(1)}} = \sum_{k=1}^{n_{2}}
+\frac{ \partial E}{\partial I_{k}^{(2)}} \cdot \frac{\partial(\sum_{k=1}^{n_{2}} W_{kj}^{(2)} \cdot Y_{j}^{(1)})}{\partial Y_{j}^{(1)}}
+\label{eq:5.32}
+\end{equation}
+
+\par Para o caso específico deste EPC, o valor de $n_{2}$ é 1, uma vez que a primeira camada escondida é seguida por uma camada com apenas um neurônio.
+
+\par A expressão \eqref{eq:5.32} pode ser reescrita da seguinte forma:
+  \begin{equation}
+    \frac{\partial E}{\partial Y_{j}^{(1)}} = \sum_{k=1}^{1} \delta^{(2)}_{k} \cdot W^{(2)}_{kj}
+    \label{eq:5.34}
+  \end{equation}
+
+\par É possível obter a seguinte expressão:
+\begin{equation}
+  \frac{\partial E}{\partial W_{ji}^{(1)}}= - ( \sum_{k=1}^{1} \delta_{k}^{(2)} \cdot W_{kj}^{(2)}) \cdot g'(I_{j}^{(1)}) \cdot x_{i}
+\end{equation}
+
+\par Dessa forma, a regra para o ajuste de pesos da matriz da primeira camada escondida é:
+\begin{equation}
+  \Delta W_{ji}^{(1)} = - \eta \cdot \frac{\partial E}{\partial W_{ji}^{(1)}} \Longleftrightarrow \Delta W_{ji}^{(1)} = \eta \cdot \delta_{j}^{(1)} \cdot x_{i}
+  \label{eq:5.36}
+\end{equation}
+
+
+
+
+
+\end{document}
