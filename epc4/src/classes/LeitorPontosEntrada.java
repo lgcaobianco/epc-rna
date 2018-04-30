@@ -9,6 +9,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * created by lgcaobianco on 2018-04-14
@@ -82,6 +83,12 @@ public class LeitorPontosEntrada {
             }
         }
         return matrizPontos;
+    }
+    
+    public int lerInputTerminal() {
+    	Scanner reader = new Scanner(System.in);  // Reading from System.in
+    	return reader.nextInt(); // Scans the next token of the input as an int.
+    	
     }
 
 }
