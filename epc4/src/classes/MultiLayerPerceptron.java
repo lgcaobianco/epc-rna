@@ -11,7 +11,7 @@ import java.util.Random;
 public class MultiLayerPerceptron {
 
 	private Double[][] W1, W1Inicial, W2, W2Inicial, deltaCamada1;
-	private List<Double[]> matrizInputs;
+	private List<Double[]> matrizInputs, matrizOperacao;
 	private Double[][] I1;
 	private Double I2 = 0.0, Y2;
 	private Double deltaCamada2 = 0.0;
@@ -24,6 +24,12 @@ public class MultiLayerPerceptron {
 		LeitorPontosEntrada leitor = new LeitorPontosEntrada(
 				"/home/lgcaobianco/repositorios/epc-rna/epc4/src/base/conjunto-treinamento", ".csv");
 		this.matrizInputs = leitor.extrairPontos();
+
+		leitor = new LeitorPontosEntrada("/home/lgcaobianco/repositorios/epc-rna/epc4/src/base/conjunto-operacao",
+				".csv");
+		this.matrizOperacao = leitor.extrairPontos();
+		leitor = null; // para leitor se tornar candidato ao garbage collector
+
 		Random random = new Random();
 
 		W2Inicial = W2 = new Double[10][1];
@@ -57,6 +63,14 @@ public class MultiLayerPerceptron {
 		this.matrizInputs = matrizInputs;
 	}
 
+	public List<Double[]> getMatrizOperacao() {
+		return matrizOperacao;
+	}
+
+	public void setMatrizOperacao(List<Double[]> matrizOperacao) {
+		this.matrizOperacao = matrizOperacao;
+	}
+
 	public void imprimirMatrizI1() {
 		for (int i = 0; i < I1.length; i++) {
 			for (int j = 0; j < I1[i].length; j++) {
@@ -77,6 +91,16 @@ public class MultiLayerPerceptron {
 		System.out.println("\n\n\n");
 	}
 
+	public void imprimirMatrizOperacao() {
+		for (int i = 0; i < this.matrizOperacao.size(); i++) {
+			for (int j = 0; j < this.matrizOperacao.get(i).length; j++) {
+				System.out.print(this.matrizOperacao.get(i)[j] + " ,");
+			}
+			System.out.println();
+		}
+		System.out.println("\n\n\n");
+	}
+
 	public void imprimirMatrizInputs() {
 		for (int i = 0; i < this.matrizInputs.size(); i++) {
 			for (int j = 0; j < this.matrizInputs.get(i).length; j++) {
@@ -85,6 +109,13 @@ public class MultiLayerPerceptron {
 			System.out.println();
 		}
 		System.out.println("\n\n\n");
+	}
+
+	public void imprimirMatrizInputs(int linhaMatriz) {
+		for (int j = 0; j < this.matrizInputs.get(linhaMatriz).length; j++) {
+			System.out.print(this.matrizInputs.get(linhaMatriz)[j] + " ,");
+		}
+		System.out.println();
 	}
 
 	public void imprimirMatrizW1() {
@@ -135,18 +166,20 @@ public class MultiLayerPerceptron {
 	public void obterY1() {
 		Y1[0][0] = -1.0;
 		for (int i = 0; i < I1.length; i++) {
-			Y1[i + 1][0] = 0.5 + 0.5 * Math.tanh( (I1[i][0]) / 2);
+			Y1[i + 1][0] = 0.5 + 0.5 * Math.tanh((I1[i][0]) / 2);
 		}
 	}
 
 	public void obterI2() {
+		I2 = 0.0;
 		for (int i = 0; i < W2.length; i++) {
 			I2 += Y1[i][0] * W2[i][0];
 		}
 	}
 
 	public void obterY2() {
-		this.Y2 = 0.5 + 0.5 * Math.tanh(I2/2);
+		Y2 = 0.0;
+		Y2 = 0.5 + 0.5 * Math.tanh(I2 / 2);
 	}
 
 	public void obterDeltaCamada2(int linhaMatrizInput) {
@@ -174,12 +207,19 @@ public class MultiLayerPerceptron {
 		}
 	}
 
+	public double calcularErroRelativo(int linhaInputMatriz) {
+		double erro = 0.0;
+		erro = (Math.abs((matrizInputs.get(linhaInputMatriz)[4] - Y2)) / ((matrizInputs.get(linhaInputMatriz)[4]))
+				* 100);
+		return erro;
+	}
+
 	public double calcularErroTotal() {
+		double erroTotal = 0;
 		for (int i = 0; i < matrizInputs.size(); i++) {
-			forwardPropagation(i);
-			System.out.println("Valor desejado: " + matrizInputs.get(i)[4] + "; Valor obtido:" + Y2);
+			erroTotal += (Math.pow((matrizInputs.get(i)[4] - Y2), 2) / 2);
 		}
-		return 0.0;
+		return (erroTotal / matrizInputs.size());
 	}
 
 	public void forwardPropagation(int linhaMatrizInput) {
