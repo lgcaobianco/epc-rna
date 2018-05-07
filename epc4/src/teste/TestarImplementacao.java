@@ -20,7 +20,7 @@ public class TestarImplementacao {
 		PrintWriter writer = new PrintWriter("/home/lgcaobianco/repositorios/epc-rna/epc4/src/base/eqm.csv", "UTF-8");
 
 		// fase de treino
-		while (Math.abs((erroAtual - erroAnterior)) > epsilon) {
+		while (Math.abs(erroAtual - erroAnterior) > epsilon) {
 			for (int i = 0; i < mlp.getMatrizInputs().size(); i++) {
 				mlp.forwardPropagation(i);
 				mlp.backwardPropagation(i);
@@ -29,7 +29,7 @@ public class TestarImplementacao {
 			
 			erroAnterior = erroAtual;
 			erroAtual = mlp.calcularErroTotal();
-			writer.println(contadorEpocas+","+erroAtual);
+			writer.println(contadorEpocas+","+Math.abs(erroAtual - erroAnterior));
 			contadorEpocas++;
 		}
 		writer.close();
