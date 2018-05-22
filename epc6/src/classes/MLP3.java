@@ -4,51 +4,61 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+import jdk.nashorn.internal.runtime.regexp.joni.ast.QuantifierNode;
+
 /**
- * created by lgcaobianco on 2018-04-29
+ * created by lgcaobianco on 2018-05-21
  */
 
-public class MultiLayerPerceptron {
-
-	private Double[][] W1, W1Inicial, W2, W2Inicial, deltaCamada1;
-	private List<Double[]> matrizInputs, matrizOperacao;
+public class MLP3 {
+	private Double[][] W1, W1Anterior, W2, W2Anterior, deltaCamada1;
+	private List<Double[]> matrizInputs, matrizOperacao, vetorEntrada;
 	private Double[][] I1;
 	private Double I2 = 0.0, Y2;
 	private Double deltaCamada2 = 0.0;
 	private double taxaAprendizagem = 0.1;
 	private Double[][] Y1;
+	private int qtdEntradas;
+	private int qtdNeuronios;
+	private Double alfa = 0.8;
 
 	// O construtor irá efetuar as operações essenciais para o funcionamento dos
 	// métodos.
-	public MultiLayerPerceptron() {
-		LeitorPontosEntrada leitor = new LeitorPontosEntrada(
-				"/home/lgcaobianco/repositorios/epc-rna/epc4/src/base/conjunto-treinamento", ".csv");
-		this.matrizInputs = leitor.extrairPontos();
+	public MLP3(int qtdEntradas, int qtdNeuronios) {
+		this.qtdEntradas = qtdEntradas;
+		this.qtdNeuronios = qtdNeuronios;
 
-		leitor = new LeitorPontosEntrada("/home/lgcaobianco/repositorios/epc-rna/epc4/src/base/conjunto-operacao",
-				".csv");
+		LeitorPontosEntrada leitor = new LeitorPontosEntrada(
+				"/home/lgcaobianco/repositorios/epc-rna/epc6/src/base/conjunto-treinamento", ".csv");
+		this.matrizInputs = leitor.extrairPontos();
+		ajustarMatrizTreinamento(qtdEntradas);
 		this.matrizOperacao = leitor.extrairPontos();
+		this.vetorEntrada = leitor.extrairPontos();
 		leitor = null; // para leitor se tornar candidato ao garbage collector
 
 		Random random = new Random();
 
-		W2Inicial = W2 = new Double[10][1];
-		deltaCamada1 = I1 = new Double[10][1];
-		Y1 = new Double[11][1];
-		W1Inicial = W1 = new Double[10][4];
+		W2Anterior = new Double[1][qtdNeuronios+1];
+		W2 = new Double[1][qtdNeuronios+1];
 
-		 
+		deltaCamada1 = new Double[10][1];
+		I1 = new Double[10][1];
+		Y1 = new Double[11][1];
+		W1Anterior = new Double[qtdNeuronios][qtdEntradas + 1];
+		W1 = new Double[qtdNeuronios][qtdEntradas + 1];
 
 		// sorteia W1
 		for (int i = 0; i < W1.length; i++) {
 			for (int j = 0; j < W1[i].length; j++) {
-				W1Inicial[i][j] = W1[i][j] = random.nextDouble();
+				W1[i][j] = random.nextDouble();
+				W1Anterior[i][j] = 0.0;
 			}
 		}
 
 		// sorteia W2
-		for (int i = 0; i < W2.length; i++) {
-			W2[i][0] = W2Inicial[i][0] = random.nextDouble();
+		for (int i = 0; i < W2[0].length; i++) {
+			W2[0][i] = random.nextDouble();
+			W2Anterior[0][i] = 0.0;
 		}
 	}
 
@@ -66,6 +76,14 @@ public class MultiLayerPerceptron {
 
 	public void setMatrizOperacao(List<Double[]> matrizOperacao) {
 		this.matrizOperacao = matrizOperacao;
+	}
+
+	public Double[][] getI1() {
+		return I1;
+	}
+
+	public void setI1(Double[][] i1) {
+		I1 = i1;
 	}
 
 	public void imprimirMatrizI1() {
@@ -153,6 +171,10 @@ public class MultiLayerPerceptron {
 	}
 
 	public void obterI1(int linhaMatrizInput) {
+		for (int i = 0; i < I1.length; i++) {
+			I1[i][0] = 0.0;
+		}
+
 		for (int i = 0; i < W1.length; i++) {
 			for (int j = 0; j < W1[i].length; j++) {
 				I1[i][0] += (matrizInputs.get(linhaMatrizInput)[j] * W1[i][j]);
@@ -169,8 +191,8 @@ public class MultiLayerPerceptron {
 
 	public void obterI2() {
 		I2 = 0.0;
-		for (int i = 0; i < W2.length; i++) {
-			I2 += Y1[i][0] * W2[i][0];
+		for (int i = 0; i < W2[0].length; i++) {
+			I2 += Y1[i][0] * W2[0][i];
 		}
 	}
 
@@ -181,41 +203,56 @@ public class MultiLayerPerceptron {
 
 	public void obterDeltaCamada2(int linhaMatrizInput) {
 		// A derivada de g(Ij) pode ser expressa como f(x) * (1 - f(x))!
-		this.deltaCamada2 = (matrizInputs.get(linhaMatrizInput)[4] - Y2) * (Y2 * (1 - Y2));
+		this.deltaCamada2 = (matrizInputs.get(linhaMatrizInput)[qtdEntradas + 1] - Y2) * (Y2 * (1 - Y2));
 	}
 
 	public void ajustarPesosCamada2() {
-		for (int i = 0; i < W2.length; i++) {
-			this.W2[i][0] = this.W2[i][0] + (this.taxaAprendizagem * this.deltaCamada2 * Y1[i][0]);
+		Double[][] aux = new Double[W2.length][W2[0].length];
+		for (int i = 0; i < W2[0].length; i++) {
+			aux[0][i] = W2[0][i];
+			this.W2[0][i] = this.W2[0][i] + (this.taxaAprendizagem * this.deltaCamada2 * Y1[i][0])
+					+ (alfa * W2[0][i] - W2Anterior[0][i]);
+		}
+
+		for (int i = 0; i < W2[0].length; i++) {
+			W2Anterior[0][i] = aux[0][i];
 		}
 	}
 
 	public void obterDeltaCamada1() {
 		for (int i = 0; i < deltaCamada1.length; i++) {
-			deltaCamada1[i][0] = deltaCamada2 * W2[i][0] * (Y1[1][0] * (1 - Y1[1][0]));
+			deltaCamada1[i][0] = deltaCamada2 * W2[0][i] * (Y1[1][0] * (1 - Y1[1][0]));
 		}
-		
+
 	}
 
 	public void ajustarPesosCamada1(int linhaInputMatriz) {
+		Double[][] aux = new Double[W1.length][W1[0].length];
 		for (int i = 0; i < W1.length; i++) {
 			for (int j = 0; j < W1[i].length; j++) {
-				W1[i][j] = W1[i][j] + taxaAprendizagem * deltaCamada1[i][0] * matrizInputs.get(linhaInputMatriz)[j];
+				aux[i][j] = W1[i][j];
+				W1[i][j] = W1[i][j] + taxaAprendizagem * (deltaCamada1[i][0] * matrizInputs.get(linhaInputMatriz)[j])
+						* (alfa * W1[i][j] - W1Anterior[i][j]);
+			}
+		}
+
+		for (int i = 0; i < W1.length; i++) {
+			for (int j = 0; j < W1[i].length; j++) {
+				W1Anterior[i][j] = aux[i][j];
 			}
 		}
 	}
 
-	public double calcularErroRelativo(int linhaInputMatriz) {
+	public double calcularEk(int linhaMatrizEntrada) {
 		double erro = 0.0;
-		erro = (Math.abs((matrizInputs.get(linhaInputMatriz)[4] - Y2)) / ((matrizInputs.get(linhaInputMatriz)[4]))
-				* 100);
-		return erro;
+		erro = Math.pow((matrizInputs.get(linhaMatrizEntrada)[qtdEntradas + 1] - Y2), 2);
+		return erro / 2;
 	}
 
-	public double calcularErroTotal() {
-		double erroTotal = 0;
+	public double calcularEm() {
+		double erroTotal = 0.0;
 		for (int i = 0; i < matrizInputs.size(); i++) {
-			erroTotal += (Math.pow((matrizInputs.get(i)[4] - Y2), 2) / 2);
+			erroTotal += calcularEk(i);
 		}
 		return (erroTotal / matrizInputs.size());
 	}
@@ -234,28 +271,49 @@ public class MultiLayerPerceptron {
 		this.ajustarPesosCamada1(linhaMatrizInput);
 
 	}
-	
+
 	public void ajustarMatrizTreinamento(int quantidadeEntradas) {
 		List<Double[]> matrizAuxiliar = new LinkedList<>();
-		int tamanhoConjuntoDados = listaPontosEntrada.size();
+		int tamanhoConjuntoDados = matrizInputs.size();
 
 		for (int i = 0; i < (tamanhoConjuntoDados - quantidadeEntradas); i++) {
 			Double[] teste = inverterPosicoes(i, quantidadeEntradas);
 			matrizAuxiliar.add(i, teste);
 		}
-		this.setMatrizAjustada(matrizAuxiliar);
+		this.setMatrizInputs(matrizAuxiliar);
 	}
 
 	public Double[] inverterPosicoes(int linhaInicial, int quantidadeEntradas) {
 		Double[] vetorAuxiliar = new Double[quantidadeEntradas + 2];
 		int auxiliar = quantidadeEntradas;
-		vetorAuxiliar[quantidadeEntradas+1] = this.listaPontosEntrada.get(linhaInicial + quantidadeEntradas)[0];
+		vetorAuxiliar[quantidadeEntradas + 1] = this.matrizInputs.get(linhaInicial + quantidadeEntradas)[0];
 		vetorAuxiliar[0] = -1.0;
 		for (int i = 0; i < quantidadeEntradas; i++) {
-			vetorAuxiliar[auxiliar] = this.listaPontosEntrada.get(i + linhaInicial)[0];
+			vetorAuxiliar[auxiliar] = this.matrizInputs.get(i + linhaInicial)[0];
 			auxiliar--;
 		}
 
 		return vetorAuxiliar;
+	}
+
+	public void faseOperacao(int amostraProcurada) {
+		for (int i = 0; i < I1.length; i++) {
+			I1[i][0] = 0.0;
+		}
+		for (int i = 0; i < W1.length; i++) {
+			I1[i][0] += -1 * W1[i][0];
+			for (int j = 1; j < W1[i].length; j++) {
+				I1[i][0] += vetorEntrada.get(amostraProcurada - j)[0] * W1[i][j];
+			}
+		}
+		setI1(I1);
+		obterY1();
+		obterI2();
+		obterY2();
+		Double[] resultado = new Double[1];
+		resultado[0] = Y2;
+		vetorEntrada.add(amostraProcurada, resultado);
+		System.out.println(Y2);
+		Y2=0.0;
 	}
 }
