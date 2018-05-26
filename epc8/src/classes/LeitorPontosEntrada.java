@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * created by lgcaobianco on 2018-05-20
+ * created by lgcaobianco on 2018-05-23
  */
 
 public class LeitorPontosEntrada {
