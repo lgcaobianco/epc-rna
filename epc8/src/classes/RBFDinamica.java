@@ -12,7 +12,7 @@ public class RBFDinamica {
 	private Double[][] centroide;
 	private Double[] distanciasEuclidianasParaNeuronios;
 	private Double[] W2;
-	private static final int quantidadeNeuronios = 5;
+	private static final int quantidadeNeuronios = 15;
 	private static final int quantidadeEntradas = 3;
 	private List<Double[]> conjuntoEntrada, conjuntoOperacao;
 	private List<Double[]> vetorG;
@@ -76,10 +76,9 @@ public class RBFDinamica {
 				"/home/lgcaobianco/repositorios/epc-rna/epc8/src/base/conjunto-treinamento", ".csv");
 		conjuntoEntrada = leitor.extrairPontos();
 
-		// leitor = new
-		// LeitorPontosEntrada("/home/lgcaobianco/repositorios/epc-rna/epc8/src/base/conjunto-operacao",
-		// ".csv");
-		// conjuntoOperacao = leitor.extrairPontos();
+		leitor = new LeitorPontosEntrada("/home/lgcaobianco/repositorios/epc-rna/epc8/src/base/conjunto-operacao",
+				".csv");
+		conjuntoOperacao = leitor.extrairPontos();
 
 		centroide = new Double[quantidadeNeuronios][quantidadeEntradas];
 
@@ -97,7 +96,7 @@ public class RBFDinamica {
 			System.out.println();
 		}
 		Random random = new Random();
-		W2 = new Double[quantidadeNeuronios + 1];
+		W2 = new Double[quantidadeNeuronios+1];
 		for (int i = 0; i < W2.length; i++) {
 			W2[i] = random.nextDouble();
 		}
@@ -168,7 +167,7 @@ public class RBFDinamica {
 			centroide[i][0] = somaCoordenadaX / grupoOmega.get(i).size();
 			centroide[i][1] = somaCoordenadaY / grupoOmega.get(i).size();
 			centroide[i][2] = somaCoordenadaZ / grupoOmega.get(i).size();
-			
+
 			somaCoordenadaX = 0.0;
 			somaCoordenadaY = 0.0;
 			somaCoordenadaZ = 0.0;
@@ -193,7 +192,6 @@ public class RBFDinamica {
 	}
 
 	public boolean compararGruposOmegas() {
-		int quantidadeGruposIguais = 0;
 		for (int i = 0; i < grupoOmega.size(); i++) {
 			for (int j = 0; j < grupoOmega.get(i).size(); j++) {
 				for (int k = 0; k < grupoOmega.get(i).get(j).length; k++) {
@@ -247,179 +245,81 @@ public class RBFDinamica {
 		}
 	}
 
-	// public int compararGrupoOmega() {
-	// }
+	public void obterG(int linhaConjuntoEntrada) {
+		double somatorio = 0.0;
+		Double[] vetorAuxiliar = new Double[1];
+		for (int i = 0; i < centroide.length; i++) {
+			for (int j = 0; j < centroide[i].length; j++) {
+				somatorio += Math.pow((conjuntoEntrada.get(linhaConjuntoEntrada)[j] - centroide[i][j]), 2);
+			}
+			double expoente = somatorio / (2 * varianciasCentroides.get(i));
+			vetorAuxiliar[0] = Math.exp((-1 * expoente));
+			vetorG.add(vetorAuxiliar);
+			somatorio = 0.0;
+		}
+	}
 
-	// public void encontrarCentroides() {
-	// while (!grupoOmega1.equals(grupoOmega1Anterior)) {
-	// atualizarCentroide1();
-	// atualizarCentroide2();
-	// salvarGrupoOmega1Anterior();
-	// atribuirEntradasAGrupoOmega();
-	// }
-	// }
-	//
-	// public void calcularVarianciaCentroide1() {
-	// double variancia, somatorio = 0.0, catetoX, catetoY;
-	// for (int i = 0; i < grupoOmega1.size(); i++) {
-	// catetoX = Math.pow((centroide[0][0] - grupoOmega1.get(i)[0].doubleValue()),
-	// 2);
-	// catetoY = Math.pow((centroide[0][1] - grupoOmega1.get(i)[1].doubleValue()),
-	// 2);
-	// somatorio += (catetoX + catetoY);
-	// }
-	//
-	// variancia = somatorio / grupoOmega1.size();
-	// this.varianciaCentroide1 = variancia;
-	// System.out.println("Variancia da centroide 1: " + variancia);
-	// }
-	//
-	// public void calcularVarianciaCentroide2() {
-	// double variancia, somatorio = 0.0, catetoX, catetoY;
-	// for (int i = 0; i < grupoOmega2.size(); i++) {
-	// catetoX = Math.pow((centroide[1][0] - grupoOmega2.get(i)[0].doubleValue()),
-	// 2);
-	// catetoY = Math.pow((centroide[1][1] - grupoOmega2.get(i)[1].doubleValue()),
-	// 2);
-	// somatorio += (catetoX + catetoY);
-	// }
-	//
-	// variancia = somatorio / grupoOmega2.size();
-	// this.varianciaCentroide2 = variancia;
-	// System.out.println("Variancia da centroide 2: " + variancia);
-	// }
-	//
-	// public void primeiroEstagioTreinamento() {
-	// atribuirEntradasAGrupoOmega();
-	// encontrarCentroides();
-	// calcularVarianciaCentroide1();
-	// calcularVarianciaCentroide2();
-	// }
-	//
-	// public void obterG(int linhaConjuntoEntrada) { double distanciaCentroide1 =
-	// 0.0, distanciaCentroide2 = 0.0, g1, g2; for (int i = 0; i < qtdEntradas; i++)
-	// { distanciaCentroide1 +=
-	// Math.pow((conjuntoEntrada.get(linhaConjuntoEntrada)[i] - centroide[0][i]),
-	// 2); }
-	//
-	// double expoente = distanciaCentroide1 / (2 varianciaCentroide1); g1 =
-	// Math.exp(-expoente); for (int i = 0; i < qtdEntradas; i++) {
-	// distanciaCentroide2 += Math.pow((conjuntoEntrada.get(linhaConjuntoEntrada)[i]
-	// - centroide[1][i]), 2); } g2 = Math.exp(-(distanciaCentroide1) / (2
-	// varianciaCentroide2));
-	//
-	// System.out.println("g1: " + g1); System.out.println("g2: " + g2); Double[]
-	// auxiliar = new Double[2]; auxiliar[0] = g1; auxiliar[1] = g2;
-	//
-	// vetorG.add(linhaConjuntoEntrada, auxiliar); }
-	//
-	// public void obterI2(int linhaMatriz) { I2 = 0.0; I2 = W2[0] -1.0; for (int
-	// i = 0; i < vetorG.get(linhaMatriz).length; i++) { I2 +=
-	// vetorG.get(linhaMatriz)[i] W2[i + 1]; } }
-	//
-	// public void obterY2() {
-	// Y2 = I2;
-	// }
-	//
-	// public double obterY2Ajustado(double I2) {
-	// if (Y2 >= 0) {
-	// Y2Ajustado = 1;
-	// } else {
-	// Y2Ajustado = -1;
-	// }
-	// return Y2Ajustado;
-	// }
-	//
-	// public void obterDeltaCamadaSaida(int linhaEntradaMatriz) {
-	// deltaCamadaSaida = conjuntoEntrada.get(linhaEntradaMatriz)[2] - Y2;
-	// }
-	//
-	// public void ajustarPesosCamadaSaida() { for (int i = 0; i < W2.length; i++) {
-	// W2[i] = W2[i] + taxaAprendizagem deltaCamadaSaida Y2; } }
-	//
-	// public double obterEk(int linhaMatrizEntrada) {
-	// double ek = 0.0;
-	// obterI2(linhaMatrizEntrada);
-	// obterY2();
-	// ek = Math.pow((conjuntoEntrada.get(linhaMatrizEntrada)[2] - Y2), 2);
-	// return ek / 2;
-	// }
-	//
-	// public double obterEm() {
-	// double somatorio = 0.0;
-	// for (int i = 0; i < conjuntoEntrada.size(); i++) {
-	// somatorio += obterEk(i);
-	// }
-	// return somatorio / conjuntoEntrada.size();
-	// }
-	//
-	// public void propagation(int i) {
-	// obterI2(i);
-	// obterY2();
-	// obterDeltaCamadaSaida(i);
-	// ajustarPesosCamadaSaida();
-	//
-	// }
-	//
-	// public void resetarG() {
-	// vetorG.clear();
-	// }
-	//
-	// public void faseOperacao() {
-	// resetarG();
-	// System.out.println("Vetor G: ");
-	// imprimirQualquer(vetorG);
-	//
-	// setConjuntoEntrada(conjuntoOperacao);
-	// for (int i = 0; i < conjuntoEntrada.size(); i++) {
-	// obterG(i);
-	// obterI2(i);
-	// obterY2();
-	// obterY2Ajustado(I2);
-	// System.out.println("Y2: " + Y2 + ", Y2 Ajustado: " + Y2Ajustado);
-	// }
-	// }
-	//
-	// public void imprimirGrupoCentroide1() throws FileNotFoundException,
-	// UnsupportedEncodingException {
-	// PrintWriter writer = new
-	// PrintWriter("/home/lgcaobianco/repositorios/epc-rna/epc7/src/base/grupoCentroide1.csv",
-	// "UTF-8");
-	// for (int i = 0; i < grupoOmega1.size(); i++) {
-	// writer.println(i + "," + grupoOmega1.get(i)[0] + "," +
-	// grupoOmega1.get(i)[1]);
-	// }
-	// writer.close();
-	// }
-	//
-	// public void imprimirGrupoCentroide2() throws FileNotFoundException,
-	// UnsupportedEncodingException {
-	// PrintWriter writer = new
-	// PrintWriter("/home/lgcaobianco/repositorios/epc-rna/epc7/src/base/grupoCentroide2.csv",
-	// "UTF-8");
-	// for (int i = 0; i < grupoOmega2.size(); i++) {
-	// writer.println(i + "," + grupoOmega2.get(i)[0] + "," +
-	// grupoOmega2.get(i)[1]);
-	// }
-	// writer.close();
-	// }
-	//
-	// public void imprimirQualquer(List<Double[]> objeto) {
-	// for (int i = 0; i < objeto.size(); i++) {
-	// for (int j = 0; j < objeto.get(0).length; j++) {
-	// System.out.print(objeto.get(i)[j] + ", ");
-	// }
-	// System.out.println();
-	// }rbf.limparGruposOmegas();
-	// System.out.println("\n\n");
-	// }
-	//
-	// public void imprimirQualquer(Double[] objeto) {
-	// for (int i = 0; i < objeto.length; i++) {
-	// System.out.print(objeto[i] + ", ");
-	// }
-	// System.out.println("\n\n");
-	// }
+	public void obterI2(int linhaPseudoElementos) {
+		I2 = 0.0;
+		I2 = W2[0] * -1;
+		for (int i = 1; i < W2.length; i++) {
+			I2 += vetorG.get(linhaPseudoElementos)[0] * W2[i];
+		}
+	}
+
+	public void obterY2() {
+		Y2 = I2;
+	}
+
+	public void obterDeltaCamadaSaida(int linhaMatrizEntrada) {
+		deltaCamadaSaida = conjuntoEntrada.get(linhaMatrizEntrada)[quantidadeEntradas] - Y2;
+	}
+
+	public void ajustarPesosCamadaSaida() {
+		for (int i = 0; i < W2.length; i++) {
+			W2[i] = W2[i] + (taxaAprendizagem * deltaCamadaSaida * Y2);
+		}
+	}
+
+	public double obterEk(int linhaMatrizEntrada) {
+		double ek = 0.0;
+		obterI2(linhaMatrizEntrada);
+		obterY2();
+		ek = Math.pow((conjuntoEntrada.get(linhaMatrizEntrada)[quantidadeEntradas] - Y2), 2);
+		return ek / 2;
+	}
+
+	public double obterEm() {
+		double somatorio = 0.0;
+		for (int i = 0; i < conjuntoEntrada.size(); i++) {
+			somatorio += obterEk(i);
+		}
+		return (somatorio / conjuntoEntrada.size());
+	}
+
+	public void propagation(int i) {
+		obterI2(i);
+		obterY2();
+		obterDeltaCamadaSaida(i);
+		ajustarPesosCamadaSaida();
+	}
+
+	public void resetarG() {
+		vetorG.clear();
+	}
+
+	public void faseOperacao() {
+		resetarG();
+
+		setConjuntoEntrada(conjuntoOperacao);
+
+		for (int i = 0; i < conjuntoEntrada.size(); i++) {
+			obterG(i);
+			obterI2(i);
+			obterY2();
+			System.out.println("Y: " + Y2);
+		}
+	}
 
 	public void imprimirQualquer(Double[][] objeto) {
 		for (int i = 0; i < objeto.length; i++) {
@@ -431,9 +331,6 @@ public class RBFDinamica {
 		System.out.println("\n\n");
 	}
 
-	/**
-	 * 
-	 */
 	public void imprimirGrupoOmega() {
 		System.out.println("Impressao de grupos omegas.");
 
@@ -463,5 +360,12 @@ public class RBFDinamica {
 			}
 			System.out.println("\n");
 		}
+	}
+
+	public void imprimirQualquer(Double[] object) {
+		for (int i = 0; i < object.length; i++) {
+			System.out.println(object[i] + " ");
+		}
+		System.out.println("\n\n");
 	}
 }
