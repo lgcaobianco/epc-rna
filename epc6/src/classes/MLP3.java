@@ -32,34 +32,41 @@ public class MLP3 {
 				"/home/lgcaobianco/repositorios/epc-rna/epc6/src/base/conjunto-treinamento", ".csv");
 		this.matrizInputs = leitor.extrairPontos();
 		ajustarMatrizTreinamento(qtdEntradas);
-		this.matrizOperacao = leitor.extrairPontos();
 		this.vetorEntrada = leitor.extrairPontos();
+		imprimirQualquer(matrizInputs);
 		leitor = null; // para leitor se tornar candidato ao garbage collector
 
 		Random random = new Random();
 
-		W2Anterior = new Double[1][qtdNeuronios+1];
-		W2 = new Double[1][qtdNeuronios+1];
+		W2Anterior = new Double[1][qtdNeuronios + 1];
+		W2 = new Double[1][qtdNeuronios + 1];
 
-		deltaCamada1 = new Double[10][1];
-		I1 = new Double[10][1];
-		Y1 = new Double[11][1];
-		W1Anterior = new Double[qtdNeuronios][qtdEntradas + 1];
-		W1 = new Double[qtdNeuronios][qtdEntradas + 1];
+		deltaCamada1 = new Double[qtdNeuronios][1];
+		I1 = new Double[qtdNeuronios][1];
+		Y1 = new Double[qtdNeuronios + 1][1];
+		W1Anterior = new Double[qtdNeuronios][qtdEntradas + 2];
+		W1 = new Double[qtdNeuronios][qtdEntradas + 2];
 
 		// sorteia W1
 		for (int i = 0; i < W1.length; i++) {
 			for (int j = 0; j < W1[i].length; j++) {
-				W1[i][j] = random.nextDouble();
+				W1[i][j] = (random.nextDouble()/100);
 				W1Anterior[i][j] = 0.0;
 			}
 		}
 
+
 		// sorteia W2
 		for (int i = 0; i < W2[0].length; i++) {
-			W2[0][i] = random.nextDouble();
+			W2[0][i] = (random.nextDouble()/100);
 			W2Anterior[0][i] = 0.0;
 		}
+
+		System.out.println("W1");
+		imprimirQualquer(W1);
+		System.out.println("W2");
+		imprimirQualquer(W2);
+
 	}
 
 	public List<Double[]> getMatrizInputs() {
@@ -86,99 +93,26 @@ public class MLP3 {
 		I1 = i1;
 	}
 
-	public void imprimirMatrizI1() {
-		for (int i = 0; i < I1.length; i++) {
-			for (int j = 0; j < I1[i].length; j++) {
-				System.out.print(this.I1[i][j] + ",");
-			}
-			System.out.println();
-		}
+	public Double[][] getW1() {
+		return W1;
 	}
 
-	public void imprimirMatrizW2() {
-		for (int i = 0; i < W2.length; i++) {
-			for (int j = 0; j < W2[i].length; j++) {
-				System.out.print(this.W2[i][j] + ",");
-			}
-			System.out.println();
-		}
-
-		System.out.println("\n\n\n");
+	public Double[][] getW2() {
+		return W2;
 	}
 
-	public void imprimirMatrizOperacao() {
-		for (int i = 0; i < this.matrizOperacao.size(); i++) {
-			for (int j = 0; j < this.matrizOperacao.get(i).length; j++) {
-				System.out.print(this.matrizOperacao.get(i)[j] + " ,");
-			}
-			System.out.println();
-		}
-		System.out.println("\n\n\n");
-	}
-
-	public void imprimirMatrizInputs() {
-		for (int i = 0; i < this.matrizInputs.size(); i++) {
-			for (int j = 0; j < this.matrizInputs.get(i).length; j++) {
-				System.out.print(this.matrizInputs.get(i)[j] + " ,");
-			}
-			System.out.println();
-		}
-		System.out.println("\n\n\n");
-	}
-
-	public void imprimirMatrizInputs(int linhaMatriz) {
-		for (int j = 0; j < this.matrizInputs.get(linhaMatriz).length; j++) {
-			System.out.print(this.matrizInputs.get(linhaMatriz)[j] + " ,");
-		}
-		System.out.println();
-	}
-
-	public void imprimirMatrizW1() {
-		for (int i = 0; i < W1.length; i++) {
-			for (int j = 0; j < W1[i].length; j++) {
-				System.out.print(this.W1[i][j] + ",");
-			}
-			System.out.println();
-		}
-
-		System.out.println("\n\n\n");
-	}
-
-	public void imprimirY1() {
-		for (int i = 0; i < Y1.length; i++) {
-			System.out.println(Y1[i][0]);
-		}
-		System.out.println("\n\n\n");
-	}
-
-	public void imprimirI2() {
-		System.out.println(I2);
-	}
-
-	public void imprimirY2() {
-		System.out.println(Y2);
-	}
-
-	public void imprimirDeltaCamada2() {
-		System.out.println(deltaCamada2);
-	}
-
-	public void imprimirDeltaCamada1() {
-		for (int i = 0; i < deltaCamada1.length; i++) {
-			System.out.println(deltaCamada1[i][0]);
-		}
-		System.out.println("\n\n");
+	public Double[][] getY1() {
+		return Y1;
 	}
 
 	public void obterI1(int linhaMatrizInput) {
-		for (int i = 0; i < I1.length; i++) {
-			I1[i][0] = 0.0;
-		}
-
+		double soma = 0.0;
 		for (int i = 0; i < W1.length; i++) {
 			for (int j = 0; j < W1[i].length; j++) {
-				I1[i][0] += (matrizInputs.get(linhaMatrizInput)[j] * W1[i][j]);
+				soma += (W1[i][j] * matrizInputs.get(linhaMatrizInput)[j]);
 			}
+			I1[i][0] = soma;
+			soma = 0.0;
 		}
 	}
 
@@ -203,15 +137,15 @@ public class MLP3 {
 
 	public void obterDeltaCamada2(int linhaMatrizInput) {
 		// A derivada de g(Ij) pode ser expressa como f(x) * (1 - f(x))!
-		this.deltaCamada2 = (matrizInputs.get(linhaMatrizInput)[qtdEntradas + 1] - Y2) * (Y2 * (1 - Y2));
+		this.deltaCamada2 = (matrizInputs.get(linhaMatrizInput)[matrizInputs.get(0).length - 1] - Y2) * (Y2 * (1 - Y2));
 	}
 
 	public void ajustarPesosCamada2() {
-		Double[][] aux = new Double[W2.length][W2[0].length];
+		Double[][] aux = new Double[1][W2[0].length];
+
 		for (int i = 0; i < W2[0].length; i++) {
 			aux[0][i] = W2[0][i];
-			this.W2[0][i] = this.W2[0][i] + (this.taxaAprendizagem * this.deltaCamada2 * Y1[i][0])
-					+ (alfa * W2[0][i] - W2Anterior[0][i]);
+			W2[0][i] = W2[0][i] + (taxaAprendizagem * deltaCamada2 * Y1[i][0]) + (alfa * (W2[0][i] - W2Anterior[0][i]));
 		}
 
 		for (int i = 0; i < W2[0].length; i++) {
@@ -221,7 +155,7 @@ public class MLP3 {
 
 	public void obterDeltaCamada1() {
 		for (int i = 0; i < deltaCamada1.length; i++) {
-			deltaCamada1[i][0] = deltaCamada2 * W2[0][i] * (Y1[1][0] * (1 - Y1[1][0]));
+			deltaCamada1[i][0] = deltaCamada2 * W2[0][i] * (Y1[i][0] * (1 - Y1[i][0]));
 		}
 
 	}
@@ -231,8 +165,8 @@ public class MLP3 {
 		for (int i = 0; i < W1.length; i++) {
 			for (int j = 0; j < W1[i].length; j++) {
 				aux[i][j] = W1[i][j];
-				W1[i][j] = W1[i][j] + taxaAprendizagem * (deltaCamada1[i][0] * matrizInputs.get(linhaInputMatriz)[j])
-						* (alfa * W1[i][j] - W1Anterior[i][j]);
+				W1[i][j] = W1[i][j] + (taxaAprendizagem * deltaCamada1[i][0] * matrizInputs.get(linhaInputMatriz)[j])
+						+ (alfa * (W1[i][j] - W1Anterior[i][j]));
 			}
 		}
 
@@ -245,7 +179,7 @@ public class MLP3 {
 
 	public double calcularEk(int linhaMatrizEntrada) {
 		double erro = 0.0;
-		erro = Math.pow((matrizInputs.get(linhaMatrizEntrada)[qtdEntradas + 1] - Y2), 2);
+		erro = Math.pow((matrizInputs.get(linhaMatrizEntrada)[qtdEntradas] - Y2), 2);
 		return erro / 2;
 	}
 
@@ -254,7 +188,8 @@ public class MLP3 {
 		for (int i = 0; i < matrizInputs.size(); i++) {
 			erroTotal += calcularEk(i);
 		}
-		return (erroTotal / matrizInputs.size());
+		double valorRetorno = erroTotal / matrizInputs.size();
+		return valorRetorno;
 	}
 
 	public void forwardPropagation(int linhaMatrizInput) {
@@ -296,24 +231,50 @@ public class MLP3 {
 		return vetorAuxiliar;
 	}
 
-	public void faseOperacao(int amostraProcurada) {
+	public void imprimirQualquer(List<Double[]> objeto) {
+		System.out
+				.println("O objeto tem dimensoes: " + objeto.size() + " linhas e " + objeto.get(0).length + "colunas");
+		for (int i = 0; i < objeto.size(); i++) {
+			for (int j = 0; j < objeto.get(i).length; j++) {
+				System.out.print(objeto.get(i)[j] + " ");
+			}
+			System.out.println();
+		}
+		System.out.println("\n\n");
+	}
+
+	public void imprimirQualquer(Double[][] objeto) {
+		System.out.println("O objeto tem dimensoes: " + objeto.length + " linhas e " + objeto[0].length + "colunas");
+		for (int i = 0; i < objeto.length; i++) {
+			for (int j = 0; j < objeto[i].length; j++) {
+				System.out.print(objeto[i][j] + " ");
+			}
+			System.out.println();
+		}
+		System.out.println("\n\n");
+	}
+
+	public void obterNovaAmostra(int posicaoAmostra) {
 		for (int i = 0; i < I1.length; i++) {
 			I1[i][0] = 0.0;
 		}
 		for (int i = 0; i < W1.length; i++) {
 			I1[i][0] += -1 * W1[i][0];
 			for (int j = 1; j < W1[i].length; j++) {
-				I1[i][0] += vetorEntrada.get(amostraProcurada - j)[0] * W1[i][j];
+				I1[i][0] += vetorEntrada.get(posicaoAmostra - j)[0] * W1[i][j];
+				// System.out.println("I1[" + i + "] += VetorEntrada(" + (posicaoAmostra - j -
+				// 1) + ") * " + W1[i][j]);
 			}
 		}
-		setI1(I1);
+
 		obterY1();
 		obterI2();
 		obterY2();
-		Double[] resultado = new Double[1];
-		resultado[0] = Y2;
-		vetorEntrada.add(amostraProcurada, resultado);
 		System.out.println(Y2);
-		Y2=0.0;
+		Double[] resultadoRede = new Double[1];
+		resultadoRede[0] = Y2;
+		vetorEntrada.add(resultadoRede);
+
 	}
+
 }

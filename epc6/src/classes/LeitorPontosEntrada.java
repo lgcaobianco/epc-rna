@@ -59,7 +59,6 @@ public class LeitorPontosEntrada {
 				}
 				matrizPontos.add(numerosSeparados);
 			}
-
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(1);
@@ -74,10 +73,5 @@ public class LeitorPontosEntrada {
 			}
 		}
 		return matrizPontos;
-	}
-
-	public int lerInputTerminal() {
-		Scanner reader = new Scanner(System.in); // Reading from System.in
-		return reader.nextInt(); // Scans the next token of the input as an int.
 	}
 }
